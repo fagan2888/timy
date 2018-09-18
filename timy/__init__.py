@@ -1,4 +1,5 @@
 import time
+import sys
 import logging
 
 from .settings import (
@@ -17,7 +18,7 @@ def output(ident, text):
     message = '{} {}'.format(ident, text)
 
     if timy_config.tracking_mode == TrackingMode.PRINTING:
-        print(message)
+        print(message, file=sys.stderr)
     elif timy_config.tracking_mode == TrackingMode.LOGGING:
         logger.info(message)
 
@@ -69,7 +70,7 @@ def timer(ident=timy_config.DEFAULT_IDENT, loops=1, include_sleeptime=True):
             _times = 'times' if loops > 1 else 'time'
             total_secs = sum(times)
 
-            print()
+            print(file=sys.stderr)
             output(ident, 'executed ({}) for {} {} in {:f} secs ({:f} hours)'.format(
                 function.__name__, loops, _times, total_secs, total_secs / 3600.0))
             output(ident, 'best time ({}) was {:f} secs'.format(function.__name__, min(times)))
