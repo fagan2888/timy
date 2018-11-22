@@ -67,13 +67,12 @@ def timer(ident=timy_config.DEFAULT_IDENT, loops=1, include_sleeptime=True):
                 end = time_func()
                 times.append(end - start)
 
-            _times = 'times' if loops > 1 else 'time'
             total_secs = sum(times)
 
             print(file=sys.stderr)
-            output(ident, 'executed ({}) for {} {} in {:f} secs ({:f} hours)'.format(
-                function.__name__, loops, _times, total_secs, total_secs / 3600.0))
-            output(ident, 'best time ({}) was {:f} secs'.format(function.__name__, min(times)))
+            output(ident, 'executed ({}) for {} times in {:.2f} secs ({:.2f} hours)'.format(
+                function.__name__, loops, total_secs, total_secs / 3600.0))
+            # output(ident, 'best time ({}) was {:f} secs'.format(function.__name__, min(times)))
             return result
 
         return wrapper
